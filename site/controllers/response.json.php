@@ -9,7 +9,7 @@ defined('_JEXEC') or die;
 class PolarbookControllerResponse extends JControllerLegacy
 {
 	/**
-	 * Remove position that can be reached by any book moves
+	 * Remove position that can not be reached by any book moves
 	 */
 	function compress()
 	{
