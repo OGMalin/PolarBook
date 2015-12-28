@@ -53,7 +53,6 @@ class PolarbookModelImport extends JModelItem
 		$query->from('#__polarbook_book');
 		$query->where('id='.$book_id);
 		$db->setQuery($query);
-		$db->execute();
 		$result=$db->loadAssoc();
 
 		if (!$result)

@@ -27,7 +27,6 @@ class PolarbookModelResponse extends JModelItem
 		$query->from('#__polarbook_data');
 		$query->where('book_id='.$id);
 		$db->setQuery($query);
-		$db->execute();
 		$results=$db->loadRowList();
 		foreach ($results as $result){
 			if (!$result)
@@ -67,12 +66,8 @@ class PolarbookModelResponse extends JModelItem
 		$query->from('#__polarbook_data');
 		$query->where('book_id='.$id);
 		$db->setQuery($query);
-		if ($db->execute()){
-			$res=$db->loadRow();
-			$result['position']=$res[0];
-		}else{
-			return array('error'=>1022);
-		}
+		$res=$db->loadRow();
+		$result['position']=$res[0];
 		
 		return $result;
 	}
@@ -89,7 +84,6 @@ class PolarbookModelResponse extends JModelItem
 		$query->from('#__polarbook_data');
 		$query->where('book_id='.$id);
 		$db->setQuery($query);
-		$db->execute();
 		$results=$db->loadRowList();
 		foreach ($results as $result){
 			if (!$result)
@@ -141,7 +135,6 @@ class PolarbookModelResponse extends JModelItem
 		$query->from('#__polarbook_data');
 		$query->where('book_id='.$id);
 		$db->setQuery($query);
-		$db->execute();
 		$results=$db->loadRowList();
 		foreach ($results as $result){
 			if (!$result)
@@ -234,10 +227,7 @@ class PolarbookModelResponse extends JModelItem
 		$query->where('id='.$id);
 		$query->where('trashed=0');
 		$db->setQuery($query);
-		if ($db->execute())
-			$result=$db->loadAssoc();
-		else
-			return array('error'=>1022);
+		$result=$db->loadAssoc();
 
 		return $result;
 	}
@@ -258,8 +248,6 @@ class PolarbookModelResponse extends JModelItem
 		$query->where('trashed=0');
 		$query->order('name');
 		$db->setQuery($query);
-		if (!$db->execute())
-			return array('error'=>1031);
 		$results=$db->loadAssocList();
 		$i=0;
 		foreach ($results as $result){
@@ -279,8 +267,6 @@ class PolarbookModelResponse extends JModelItem
 		$query->where('block=0');
 		$query->order('name');
 		$db->setQuery($query);
-		if (!$db->execute())
-			return array('error'=>1071);
 		return $db->loadAssocList();
 	}
 	
@@ -301,7 +287,6 @@ class PolarbookModelResponse extends JModelItem
 		$query->from('#__polarbook_data');
 		$query->where('book_id='.$import);
 		$db->setQuery($query);
-		$db->execute();
 		$results=$db->loadAssocList();
 		foreach ($results as $result){
 			if (!$result)
@@ -344,8 +329,6 @@ class PolarbookModelResponse extends JModelItem
 		$query->from('#__polarbook_book');
 		$query->where('trashed=1');
 		$db->setQuery($query);
-		if (!$db->execute())
-			return array('error'=>1031);
 		$results=$db->loadAssocList();
 		$i=0;
 		foreach ($results as $result){
@@ -377,14 +360,14 @@ class PolarbookModelResponse extends JModelItem
 			$query->where('fen LIKE '.$db->quote($fen));
 		$query->where('book_id='.$book_id);
 		$db->setQuery($query);
-		if (!$db->execute())
-			return array('error' => 1042);
-		if ($db->getNumRows()==0){
+		
+		$result=$db->loadAssoc();
+		if (($result==null)|| (count($result)==0))
+		{
 			$result=$this->emptyTable('data');
 			$result['book_id']=$book_id;
 			$result['fen']=$fen;
 		}else{
-			$result=$db->loadAssoc();
 			// Remove moves without a practice move response
 			if ($practice && $level)
 				$this->checkPractice($id, $book_id, $result, $level, $fen);
@@ -418,7 +401,6 @@ class PolarbookModelResponse extends JModelItem
 		$query->from('#__polarbook_book');
 		$query->where('id='.$book_id);
 		$db->setQuery($query);
-		$db->execute();
 		$result=$db->loadAssoc();
 
 		if (!$result)
@@ -542,13 +524,11 @@ class PolarbookModelResponse extends JModelItem
 			$query->where('fen='.$db->quote($in['fen']));
 			$query->where('book_id='.$in['book_id']);
 			$db->setQuery($query);
-			if ($db->execute()){
-				$res=$db->loadAssoc();
-				if (!isset($res['id']))
-					$in['id']=0;
-				else
-					$in['id']=$res['id'];
-			}
+			$res=$db->loadAssoc();
+			if (!isset($res['id']))
+				$in['id']=0;
+			else
+				$in['id']=$res['id'];
 		}
 			
 		$query = $db->getQuery(true);

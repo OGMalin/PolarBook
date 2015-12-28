@@ -23,7 +23,7 @@ class PolarbookModelExport extends JModelItem
 		$query->from('#__polarbook_data');
 		$query->where('book_id='.$book_id);
 		$db->setQuery($query);
-		$db->execute();
+//		$db->execute();
 		$results=$db->loadRowList();
 		foreach ($results as $result){
 			if (!$result)
@@ -40,7 +40,7 @@ class PolarbookModelExport extends JModelItem
 		$query->from('#__polarbook_data');
 		$query->where('book_id='.$book_id);
 		$db->setQuery($query);
-		$db->execute();
+//		$db->execute();
 		$results=$db->loadRowList();
 		foreach ($results as $result){
 			if (!$result)
@@ -59,7 +59,7 @@ class PolarbookModelExport extends JModelItem
 		$query->from('#__polarbook_data');
 		$query->where('book_id='.$book_id);
 		$db->setQuery($query);
-		$db->execute();
+//		$db->execute();
 		$results=$db->loadRowList();
 		foreach ($results as $result){
 			if (!$result)
@@ -89,7 +89,7 @@ class PolarbookModelExport extends JModelItem
 		$query->from('#__polarbook_book');
 		$query->where('id='.$book_id);
 		$db->setQuery($query);
-		$db->execute();
+//		$db->execute();
 		$result=$db->loadAssoc();
 
 		if (!$result)
@@ -142,13 +142,9 @@ class PolarbookModelExport extends JModelItem
 		$query->from('#__polarbook_book');
 		$query->where('id='.$id);
 		$db->setQuery($query);
-		if ($db->execute()){
-			$res=$db->loadRow();
-//			return $res[0];
- 			$name=$res[0];
- 			return preg_replace('/[ .,]/','_',$name);
-		}
-		return 'error';
+		$res=$db->loadRow();
+		$name=$res[0];
+		return preg_replace('/[ .,]/','_',$name);
 	}
 
 }
