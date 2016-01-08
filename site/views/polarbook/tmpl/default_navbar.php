@@ -1,4 +1,4 @@
- <nav class="navbar">
+<nav class="navbar span12">
 <!--   <div class="navbar navbar-inverse"> -->
  	<div class="navbar-inner">
 		<div class="container">
