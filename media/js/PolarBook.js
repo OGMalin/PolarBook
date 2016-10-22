@@ -88,7 +88,7 @@ function init()
 	if (status != '')
 		jQuery('#status').text(status);
 
-	document.getElementById('bookimportfileinput').addEventListener('change', handleFileSelect, false);
+//	document.getElementById('bookimportfileinput').addEventListener('change', handleFileSelect, false);
 };
 
 function menuFileNew() {
@@ -389,15 +389,8 @@ function menuBookImportBook(func)
 
 function menuBookImportFile()
 {
-	if (window.File && window.FileReader && window.FileList && window.Blob)
-	{
-		jQuery('#bookimportfilebook').val(currentBook.id);
-		jQuery('#bookImportFile').modal();
-	
-	} else 
-	{
-		jQuery("#status").text('Error: Utforkeren din kan ikke lese lokale filer.');
-	}
+	jQuery('#bookimportfilebook').val(currentBook.id);
+	jQuery('#bookImportFile').modal();
 }
 
 function menuBookProperty(func) {
@@ -1292,21 +1285,3 @@ function reading(b)
 	is_writing=b;
 	document.getElementById("read").style.backgroundColor=(b?'red':'green');
 }
-
-function handleFileSelect(evt)
-{
-	var files = evt.target.files; // FileList object
-
-    // files is a FileList of File objects. List some properties.
-	var output = [];
-	for (var i = 0, f; f = files[i]; i++)
-	{
-		output.push('<li><strong>', escape(f.name), '</strong> (', f.type || 'n/a', ') - ', f.size, ' bytes, last modified: ', f.lastModifiedDate ? f.lastModifiedDate.toLocaleDateString() : 'n/a',
-                  '</li>');
-    }
-	document.getElementById('bookimportfileoutput').innerHTML = '<ul>' + output.join('') + '</ul>';
-};
-
-function menuBookImportFile()
-{
-};

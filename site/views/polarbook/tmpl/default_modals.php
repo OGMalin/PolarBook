@@ -95,9 +95,7 @@ defined('_JEXEC') or die;
 		<button id="bookimportbooksave" class="btn btn-primary" data-dismiss="modal" aria-hidden="true" onclick="menuBookImportBook(1);return false;"><?php echo JText::_('COM_POLARBOOK_SAVE') ?></button>
 	</div>
 </div>
-
 <!-- Book ImportFile dialog -->
-<!-- 
 <div id="bookImportFile" class="modal hide fade" tabindex="-1" data-backdrop="static" role="dialog" aria-labelledby="bookImportFileLabel" aria-hidden="true">
 	<div class="modal-header">
 		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
@@ -108,7 +106,7 @@ defined('_JEXEC') or die;
 			<input id="bookimportfilebook" type="hidden" name="book_id" value=""></input>
 			<input type="hidden" name="task" value="import.file"></input>
 			<label><?php echo JText::_('COM_POLARBOOK_BOOKIMPORTFILE_NAME') ?></label>
-			<input type="file" id="bookimportfileinput" name="userfile"></input><br>
+			<input type="file" name="userfile"></input><br>
 			<input type="submit"></input>
 		</form>
 	</div>
@@ -116,24 +114,6 @@ defined('_JEXEC') or die;
 		<button class="btn" data-dismiss="modal" aria-hidden="true"><?php echo JText::_('COM_POLARBOOK_CLOSE') ?></button>
 	</div>
 </div>
- -->
-<div id="bookImportFile" class="modal hide fade" tabindex="-1" data-backdrop="static" role="dialog" aria-labelledby="bookImportFileLabel" aria-hidden="true">
-	<div class="modal-header">
-		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-		<h3 id="bookImportFileLabel"><?php echo JText::_('COM_POLARBOOK_BOOKIMPORTFILE_LABEL') ?></h3>
-	</div>
-	<div class="modal-body">
-			<label><?php echo JText::_('COM_POLARBOOK_BOOKIMPORTFILE_NAME') ?></label>
-			<input type="text" id="bookimportfileoutput" name="userfileoutput"></input>
-			<input type="file" id="bookimportfileinput" name="userfile"></input><br>
-		</form>
-	</div>
-	<div class="modal-footer">
-		<button class="btn" data-dismiss="modal" aria-hidden="true"><?php echo JText::_('COM_POLARBOOK_CLOSE') ?></button>
-		<button id="bookimportfilesave" class="btn btn-primary" data-dismiss="modal" aria-hidden="true" onclick="menuBookImportFile();return false;"><?php echo JText::_('COM_POLARBOOK_SAVE') ?></button>
-	</div>
-</div>
-
 <!-- Book Property dialog -->
 <div id="bookProperty" class="modal hide fade" tabindex="-1" data-backdrop="static" role="dialog" aria-labelledby="bookPropertyLabel" aria-hidden="true">
 	<div class="modal-header">

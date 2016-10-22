@@ -275,6 +275,7 @@ class PolarbookControllerResponse extends JControllerLegacy
 		$doc->setMimeEncoding('application/json');
 		echo json_encode($res);
 		$app->close();
+		exit();
 	}
 	
 	/**
