@@ -37,7 +37,7 @@ class ChessGame
 	public $black;
 	public $result;
 	public $pos;
-  public $firstmove; // First halfmove in the game
+	public $firstmove; // First halfmove in the game
 
 	function __construct()
 	{
