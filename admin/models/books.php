@@ -43,7 +43,7 @@ class PolarbookModelBooks extends JModelList
 						'a.id, a.name','a.user','s.public','a.member','a.readuser','a.writeuser','a.created','a.comment'
 				)
 		);
-		$query->from($db->quoteName('#__polarbook_books').' AS a');
+		$query->from($db->quoteName('#__polarbook_book').' AS a');
 
 		return $query;
 	}
