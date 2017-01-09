@@ -18,8 +18,8 @@ class PolarbookControllerTest extends JControllerLegacy
 	public function ChessBoard()
 	{
 		echo "<h2>ChessBoard</h2>";
-		$fen="rnbqkb1r/pp1p1ppp/2p5/4P3/2B5/8/PPP1NnPP/RNBQK2R w KQkq - 0 6";
-		
+//		$fen="rnbqkb1r/pp1p1ppp/2p5/4P3/2B5/8/PPP1NnPP/RNBQK2R w KQkq - 0 6";
+		$fen="rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
 		echo "\$cb = new ChessBoard()<br/>";
 		$cb = new ChessBoard();
 		
@@ -28,8 +28,38 @@ class PolarbookControllerTest extends JControllerLegacy
 		echo "\$cb->getFen()<br/>";
 		echo $cb->getFen() . "<br/>";
 		
-		echo "Move generator<br/>";
-		echo $this->movegenTest(3, $cb);
+	}
+
+	public function MoveGenerator()
+	{
+//		$fen="rnbq1k1r/pp1Pbppp/2p5/8/2B5/8/PPP1NnPP/RNBQK2R w KQ - 1 8";
+//		$fen="r3k2r/Pppp1ppp/1b3nbN/nP6/BBP1P3/q4N2/Pp1P2PP/R2Q1RK1 w kq - 0 1";
+//		$fen="r2q1rk1/pP1p2pp/Q4n2/bbp1p3/Np6/1B3NBn/pPPP1PPP/R3K2R b KQ - 0 1";
+//		$fen="8/2p5/3p4/KP5r/1R3p1k/8/4P1P1/8 w - -";
+//		$fen="r3k2r/p1ppqpb1/bn2pnp1/3PN3/1p2P3/2N2Q1p/PPPBBPPP/R3K2R w KQkq -";
+//		$fen="rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
+		$cb = new ChessBoard();
+		echo "<h2>Move generator</h2>";
+		$fen="r3k2r/Pppp1ppp/1b3nbN/nP6/BBP1P3/q4N2/Pp1P2PP/R2Q1RK1 w kq - 0 1";
+		$fen="r3k2r/Pppp1ppp/1b3nbN/nPB5/B1P1P3/q4N2/Pp1P2PP/R2Q1RK1 b kq -";
+		for ($i=3; $i<4; $i++)
+		{
+			$cb->setFen($fen);
+			$t1=time();
+			$n=$this->movegenTest($i, $cb);
+			$t2=time()-$t1;
+			echo $i . " - " . $n . " - " . $t2 . "<br />";
+		}
+ 		$fen="r2q1rk1/pP1p2pp/Q4n2/bbp1p3/Np6/1B3NBn/pPPP1PPP/R3K2R b KQ - 0 1";
+ 		$fen="r2q1rk1/pP1p2pp/Q4n2/b1p1p3/Npb5/1B3NBn/pPPP1PPP/R3K2R w KQ -";
+ 			for ($i=3; $i<4; $i++)
+ 		{
+ 			$cb->setFen($fen);
+ 			$t1=time();
+ 			$n=$this->movegenTest($i, $cb);
+ 			$t2=time()-$t1;
+ 			echo $i . " - " . $n . " - " . $t2 . "<br />";
+ 		}
 	}
 	
 	public function ChessGame()
@@ -74,9 +104,12 @@ class PolarbookControllerTest extends JControllerLegacy
 		{
 			if ($depth > 1)
 			{
+				$n1=$nodes;
 				$b->copy($cp);
 				$b->doMove($ml->move[$moveit]);
 				$nodes = $this->rec_movegen($depth - 1, $ply + 1, $b, $nodes);
+				if ($ply==0)
+					echo "f:".$b->fromSquare($ml->move[$moveit]) . " t:" . $b->toSquare($ml->move[$moveit]) . " p:" . $b->promotePiece($ml->move[$moveit]) . " - n=" . ($nodes-$n1) . "<br />"; 
 			}
 			else
 			{
