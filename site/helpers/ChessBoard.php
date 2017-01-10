@@ -47,179 +47,180 @@ class MoveList
 
 class ChessBoard extends BasicBoard
 {
-  public $knightPath;
-  public $kingPath;
-  public $bishopPath;
-  public $rookPath;
+	public $knightPath;
+	public $kingPath;
+	public $bishopPath;
+	public $rookPath;
   
-  function __construct()
-  {
-  	parent::__construct();
-  	$this->knightPath = array ( -2,1, -1,2, 1,2, 2,1, 2,-1, 1,-2, -1,-2, -2,-1 );
-  	$this->kingPath   = array ( -1,0, -1, 1, 0,1, 1,1,  1,0, 1,-1, 0,-1, -1,-1 );
-  	$this->bishopPath = array ( -1,1, 1,1, 1,-1, -1,-1 );
-  	$this->rookPath   = array ( -1,0, 0,1, 1,0, 0,-1 );
-  }
+	function __construct()
+	{
+		parent::__construct();
+		$this->knightPath = array ( -2,1, -1,2, 1,2, 2,1, 2,-1, 1,-2, -1,-2, -2,-1 );
+		$this->kingPath   = array ( -1,0, -1, 1, 0,1, 1,1,  1,0, 1,-1, 0,-1, -1,-1 );
+		$this->bishopPath = array ( -1,1, 1,1, 1,-1, -1,-1 );
+		$this->rookPath   = array ( -1,0, 0,1, 1,0, 0,-1 );
+	}
   
-  public function clear()
-  {
-  	parent::clear();
-  }
+	public function clear()
+	{
+		parent::clear();
+	}
 
-  public function isAttacked($sq,$color)
-  {
-    $pawn=$color?7:1;
-    $knight=$color?8:2;
-    $bishop=$color?9:3;
-    $rook=$color?10:4;
-    $queen=$color?11:5;
-    $king=$color?12:6;
-    $file=$sq%8;
-    // Attacked from diagonals
-    $i=0;
-    while ($i<8)
-    {
-      $tofile=$file+$this->bishopPath[$i];
-      $torow=(int)($sq/8)+$this->bishopPath[($i+1)];
-      $tosq=$tofile+$torow*8;
-      while (($tofile>=0) && ($tofile<8) && ($torow>=0) && ($torow<8))
-      {
-        if ($this->pieceColor($this->board[$tosq])!=-1)
-        {
-          if (($this->board[$tosq]==$bishop) || ($this->board[$tosq]==$queen))
-            return true;
-          break;
-        }
-        $tofile+=$this->bishopPath[$i];
-        $torow+=$this->bishopPath[($i+1)];
-        $tosq=$tofile+$torow*8;
-      }
-      $i+=2;
-    }
+	public function isAttacked($sq,$color)
+	{
+		$pawn=$color?7:1;
+		$knight=$color?8:2;
+		$bishop=$color?9:3;
+		$rook=$color?10:4;
+		$queen=$color?11:5;
+		$king=$color?12:6;
+		$file=$sq%8;
+		// Attacked from diagonals
+		$i=0;
+		while ($i<8)
+		{
+			$tofile=$file+$this->bishopPath[$i];
+			$torow=(int)($sq/8)+$this->bishopPath[($i+1)];
+			$tosq=$tofile+$torow*8;
+			while (($tofile>=0) && ($tofile<8) && ($torow>=0) && ($torow<8))
+			{
+				if ($this->pieceColor($this->board[$tosq])!=-1)
+				{
+					if (($this->board[$tosq]==$bishop) || ($this->board[$tosq]==$queen))
+						return true;
+					break;
+				}
+				$tofile+=$this->bishopPath[$i];
+				$torow+=$this->bishopPath[($i+1)];
+				$tosq=$tofile+$torow*8;
+			}
+			$i+=2;
+		}
 
-    // Attacked from rank and file
-    $i=0;
-    while ($i<8)
-    {
-      $tofile=$file+$this->rookPath[$i];
-      $torow=(int)($sq/8)+$this->rookPath[($i+1)];
-      $tosq=$tofile+$torow*8;
-      while (($tofile>=0) && ($tofile<8) && ($torow>=0) && ($torow<8))
-      {
-        if ($this->pieceColor($this->board[$tosq])!=-1)
-        {
-          if (($this->board[$tosq]==$rook) || ($this->board[$tosq]==$queen))
-            return true;
-          break;
-        }
-        $tofile+=$this->rookPath[$i];
-        $torow+=$this->rookPath[($i+1)];
-        $tosq=$tofile+$torow*8;
-      }
-      $i+=2;
-    }
-    // Attacked from knight and king
-    $i=0;
-    while ($i<16)
-    {
-      $tofile=$file+$this->knightPath[$i];
-      $torow=(int)($sq/8)+$this->knightPath[($i+1)];
-      $tosq=$tofile+$torow*8;
-      if (($tofile>=0) && ($tofile<8) && ($torow>=0) && ($torow<8))
-        if ($this->board[$tosq]==$knight)
-          return true;
-      $tofile=$file+$this->kingPath[$i];
-      $torow=(int)($sq/8)+$this->kingPath[($i+1)];
-      $tosq=$tofile+$torow*8;
-      if (($tofile>=0) && ($tofile<8) && ($torow>=0) && ($torow<8))
-        if ($this->board[$tosq]==$king)
-          return true;
-      $i+=2;
-    }
+		// Attacked from rank and file
+		$i=0;
+		while ($i<8)
+		{
+			$tofile=$file+$this->rookPath[$i];
+			$torow=(int)($sq/8)+$this->rookPath[($i+1)];
+			$tosq=$tofile+$torow*8;
+			while (($tofile>=0) && ($tofile<8) && ($torow>=0) && ($torow<8))
+			{
+				if ($this->pieceColor($this->board[$tosq])!=-1)
+				{
+					if (($this->board[$tosq]==$rook) || ($this->board[$tosq]==$queen))
+						return true;
+					break;
+				}
+				$tofile+=$this->rookPath[$i];
+				$torow+=$this->rookPath[($i+1)];
+				$tosq=$tofile+$torow*8;
+			}
+			$i+=2;
+		}
+		// Attacked from knight and king
+		$i=0;
+		while ($i<16)
+		{
+			$tofile=$file+$this->knightPath[$i];
+			$torow=(int)($sq/8)+$this->knightPath[($i+1)];
+			$tosq=$tofile+$torow*8;
+			if (($tofile>=0) && ($tofile<8) && ($torow>=0) && ($torow<8))
+				if ($this->board[$tosq]==$knight)
+					return true;
+			$tofile=$file+$this->kingPath[$i];
+			$torow=(int)($sq/8)+$this->kingPath[($i+1)];
+			$tosq=$tofile+$torow*8;
+			if (($tofile>=0) && ($tofile<8) && ($torow>=0) && ($torow<8))
+				if ($this->board[$tosq]==$king)
+					return true;
+			$i+=2;
+		}
 
-    // Pawns
-    $tofile=$file-1;
-    $torow=(int)($sq/8)+($color?1:-1);
-    $tosq=$tofile+$torow*8;
-    for ($i=0;$i<2;$i++)
-    {
-      if (($tofile>=0) && ($tofile<8) && ($torow>=0) && ($torow<8))
-        if ($this->board[$tosq]==$pawn)
-          return true;
-      $tofile=$file+1;
-      $tosq=$tofile+$torow*8;
-    }
-    return false;
-  }
+		// Pawns
+		$tofile=$file-1;
+		$torow=(int)($sq/8)+($color?1:-1);
+		$tosq=$tofile+$torow*8;
+		for ($i=0;$i<2;$i++)
+		{
+			if (($tofile>=0) && ($tofile<8) && ($torow>=0) && ($torow<8))
+				if ($this->board[$tosq]==$pawn)
+					return true;
+			$tofile=$file+1;
+			$tosq=$tofile+$torow*8;
+		}
+		return false;
+	}
 
-  public function addPawnMoves(&$ml,$sq)
-  {
-    $pawnRow=($this->toMove)?-8:8;
+	public function addPawnMoves(&$ml,$sq)
+	{
+		$pawnRow=($this->toMove)?-8:8;
 
-    // One square forward;
-    $tosq=$sq+$pawnRow;
-    if ($this->board[$tosq]==0)
-    {
-      if (($tosq<8)||($tosq>55))
-        $this->addPawnPromote($ml,$sq|($tosq<<8));
-      else
-        $ml->add($sq|($tosq<<8));
-    }
+		// One square forward;
+		$tosq=$sq+$pawnRow;
+		if ($this->board[$tosq]==0)
+		{
+			if (($tosq<8)||($tosq>55))
+				$this->addPawnPromote($ml,$sq|($tosq<<8));
+			else
+				$ml->add($sq|($tosq<<8));
+		}
 
-    // Capture
-    $file=$sq%8;
-    $capfile=-1; // Look first to left
-    for ($i=0;$i<2;$i++)
-    {
-      if ((($file+$capfile)>=0) && (($file+$capfile)<8))
-      {
-        $tosq=$sq+$capfile+$pawnRow;
-        if (($this->board[$tosq]!=0) && ($this->pieceColor($this->board[$tosq])!=$this->toMove))
-			  {
-          if (($tosq<8)||($tosq>55))
-            $this->addPawnPromote($ml,$sq+($tosq<<8));
-          else
-            $ml->add($sq+($tosq<<8));
-        }elseif ($tosq==$this->enPassant)
-        {
-          $ml->add($sq|($tosq<<8));
-        }
-      }
-	    $capfile=1;  // Look to the right
-    }
+		// Capture
+		$file=$sq%8;
+		$capfile=-1; // Look first to left
+		for ($i=0;$i<2;$i++)
+		{
+			if ((($file+$capfile)>=0) && (($file+$capfile)<8))
+			{
+				$tosq=$sq+$capfile+$pawnRow;
+				if (($this->board[$tosq]!=0) && ($this->pieceColor($this->board[$tosq])!=$this->toMove))
+				{
+					if (($tosq<8)||($tosq>55))
+						$this->addPawnPromote($ml,$sq+($tosq<<8));
+					else
+						$ml->add($sq+($tosq<<8));
+				}elseif ($this->enPassant && ($tosq==$this->enPassant))
+				{
+					$ml->add($sq|($tosq<<8));
+				}
+			}
+			$capfile=1;  // Look to the right
+		}
 
-    // Two square forward
-    if ((((int)($sq/8)==1)&&($this->toMove==0)) || (((int)($sq/8)==6)&&($this->toMove==1)))
-      if (($this->board[$sq+$pawnRow]==0) && ($this->board[$sq+$pawnRow*2]==0))
-        $ml->add($sq|(($pawnRow*2+$sq)<<8));
-  }
+		// Two square forward
+		if ((((int)($sq/8)==1)&&($this->toMove==0)) || (((int)($sq/8)==6)&&($this->toMove==1)))
+			if (($this->board[$sq+$pawnRow]==0) && ($this->board[$sq+$pawnRow*2]==0))
+				$ml->add($sq|(($pawnRow*2+$sq)<<8));
 
-  public function addPawnPromote(&$ml, $m)
-  {
-    $c=$this->toMove?6:0;
-    $ml->add($m|((2+$c)<<16));
-    $ml->add($m|((3+$c)<<16));
-    $ml->add($m|((4+$c)<<16));
-    $ml->add($m|((5+$c)<<16));
-  }
+	}
 
-  public function addNoSlideMoves(&$ml, $sq, &$sqadd)
-  {
-    $file=$sq%8;
-    $i=0;
-    while($i<16)
-    {
-      $tofile=$file+$sqadd[$i];
-      $torow=(int)($sq/8)+$sqadd[($i+1)];
-      if (($tofile>=0) && ($tofile<8) && ($torow>=0) && ($torow<8))
-      {
-        $tosq=$tofile+$torow*8;
-        if ($this->pieceColor($this->board[$tosq])!=$this->toMove)
-          $ml->add($sq|($tosq<<8));
-      }
-      $i+=2;
-    }
-  }
+	public function addPawnPromote(&$ml, $m)
+	{
+		$c=$this->toMove?6:0;
+		$ml->add($m|((2+$c)<<16));
+		$ml->add($m|((3+$c)<<16));
+		$ml->add($m|((4+$c)<<16));
+		$ml->add($m|((5+$c)<<16));
+	}
+
+	public function addNoSlideMoves(&$ml, $sq, &$sqadd)
+	{
+		$file=$sq%8;
+		$i=0;
+		while($i<16)
+		{
+			$tofile=$file+$sqadd[$i];
+			$torow=(int)($sq/8)+$sqadd[($i+1)];
+			if (($tofile>=0) && ($tofile<8) && ($torow>=0) && ($torow<8))
+			{
+				$tosq=$tofile+$torow*8;
+				if ($this->pieceColor($this->board[$tosq])!=$this->toMove)
+					$ml->add($sq|($tosq<<8));
+			}
+			$i+=2;
+		}
+	}
 
   function addSlideMoves(&$ml, $sq, &$sqadd)
   {
@@ -489,7 +490,7 @@ function getMoveFromText($s)
   }
 
  	function stripMoveText(&$s)
-  {
+	{
     $i=0;
     $j=0;
     $len=strlen($s);
@@ -535,6 +536,21 @@ function getMoveFromText($s)
   	}
   	return 0;
   }
+  
+	function longMove($m)
+	{
+		$file = array('a','b','c','d','e','f','g','h');
+		$row = array('1','2','3','4','5','6','7','8');
+		$piece = array('','P','N','B','R','Q','K');
+		$fsq=$this->fromSquare($m);
+		$tsq=$this->toSquare($m);
+		$tm=$file[$fsq%8];
+		$tm.=$row[(int)($fsq/8)];
+		$tm.=$file[$tsq%8];
+		$tm.=$row[(int)($tsq/8)];
+		$tm.=$piece[$this->pieceValue($this->promotePiece($m))];
+		return $tm;
+	}
 }
 
 

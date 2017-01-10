@@ -139,12 +139,12 @@ class BasicBoard
 		$file=0;
 		$row=0;
 		if (($fen[$idx]>='a') && ($fen[$idx]<='h'))
-			$file=$fen[$idx]-'a';
+			$file=ord($fen[$idx])-ord('a');
 		++$idx;
 		if ($idx >= $len)
 			return;
 		if (($fen[$idx]>='1') && ($fen[$idx]<='8'))
-			$row=$fen[$idx]-'1';
+			$row=ord($fen[$idx])-ord('1');
 		if ($row>0)
 			$this->enPassant=$row*8+$file;
 	}
